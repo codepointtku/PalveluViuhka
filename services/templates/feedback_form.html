@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <h1>Ilmoita virheestä</h1>
+        <textarea name=feedback rows=6 cols=80></textarea><br>
+        <input type=hidden name=ref value='https://tyollistymistaedistavatpalvelut.turku.fi/details/{{ ref }}'>
+        <br>
+        <input type=submit value="Lähetä">
+    </form>
+{% endblock %}
+

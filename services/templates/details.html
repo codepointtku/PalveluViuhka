@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <style>
+        label {
+            font-weight: bold;
+            margin-top: 0.5em
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <a class="btn btn-primary btn-lg" href="javascript:history.back()" role="button"
+       style="background: #00A97A;border-color: #00A97A;"><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i>&nbsp; Palaa hakuun</a>
+<br>
+<br>
+    <h2>{{ object.name }}</h2>
+
+    {% if object.organization %}
+        <label>Palvelun toteuttaja</label><br>
+        {{ object.organization }}<br>
+    {% endif %}
+
+    {% if object.ingress %}
+        <label>Tiivistelmä</label><br>
+        {{ object.ingress|linebreaks }}<br>
+    {% endif %}
+
+    {% if object.description %}
+        <label>Palvelun kuvaus</label><br>
+        {{ object.description|safe }}<br>
+    {% endif %}
+
+    {% if object.constraint %}
+        <label>Rajaukset</label><br>
+        {{ object.constraint }}<br>
+    {% endif %}
+
+    {% if object.description4 %}
+        <label>Toimi näin</label><br>
+        {{ object.description4|safe }}<br>
+        <br>
+    {% endif %}
+
+    {% if object.end %}
+        <label>Toiminta päättyy</label><br>
+        {{ object.end }}<br>
+    {% endif %}
+
+    {% if object.address %}
+        <label>Käyntitiedot</label><br>
+        {{ object.address|linebreaks }}<br>
+    {% endif %}
+
+    {% if object.post_address %}
+        <label>Postiosoite</label><br>
+        {{ object.post_address|linebreaks }}<br>
+    {% endif %}
+
+    {% if object.contact_person_phone %}
+        <label>Puhelin</label><br>
+        {{ object.contact_person_phone|linebreaks }}<br>
+    {% endif %}
+
+    {% if object.contact_email %}
+        <label>Sähköposti</label><br>
+        {{ object.contact_email|linebreaks }}<br>
+    {% endif %}
+
+    {% if object.www %}
+        <label>Verkkosivu</label><br>
+        {{ object.www|safe }}<br>
+    {% endif %}
+
+    <br>
+    <hr>
+    &nbsp; &nbsp; <a href='{{ FORCE_SCRIPT_NAME }}/feedback_form?ref={{ object.id }}'>Ilmoita virheestä</a>
+    <br>&nbsp;<br>
+    {% if user.is_superuser %}
+        <a href="/admin/services/service/{{ object.id }}/change/">Muokkaa palvelun tietoja</a>
+        <br>
+        <hr>
+    {% endif %}
+{% endblock %}
+

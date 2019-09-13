@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="welcome">
+    <center>
+        <h1><img src="/static/logo.png" border="0"> Työllisyysviuhka</h1>
+        <p>Työllistymistä edistäviä palveluja Turun alueella</p>
+    </center>
+</div>
+<div id="root"></div>
+<script src="{% static "search.js" %}"></script>
+{% endblock %}

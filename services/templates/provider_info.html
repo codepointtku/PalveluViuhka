@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Lisää palvelu</h1>
+<p>Seuraavalla sivulla voit lisätä palvelun tiedot Työllisyysviuhkaan.</p>
+<form method="get" action="{{ FORCE_SCRIPT_NAME }}/form/">
+    <button type="submit" class="btn button-info">Lisää palvelu</button>
+</form>
+<br>
+<br>
+{% endblock %}
