@@ -1,6 +1,4 @@
 node_modules/
-env/
-Lib/
-Lib/site-packages/pip/__pycache__/__init__.cpython-37.pyc
-Lib/site-packages/pip/__pycache__/__init__.cpython-37.pyc
-Lib/site-packages/pip/__pycache__/__init__.cpython-37.pyc
+env/**
+Lib/**
+services/**
