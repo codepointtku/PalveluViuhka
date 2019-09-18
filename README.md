@@ -1,19 +1,19 @@
-"# PalveluViuhka" 
+### PalveluViuhka
 
 Installation
 ------------
 
 ### Prepare and activate virtualenv
-    Windows
-        ```
-        python -m venv env
-        call env/scripts/activate
-        ```
-    Linux
-        ```
-        python3 -m venv env
-        source venv/bin/activate
-        ```
+Windows
+    ```shell
+    python -m venv env
+    call env/scripts/activate
+    ```
+Linux
+    ```shell
+    python3 -m venv env
+    source venv/bin/activate
+    ```
 
 
 ### Install required packages
@@ -25,17 +25,18 @@ Install all packages required for development with pip command:
 
 ### Create the database
 
-Linux
-    ```shell
-    sudo -u postgres psql -c "create role employment with encrypted password 'secure-password';"
-    sudo -u postgres psql -c "create database employment_services"
-    ```
+- Linux
 
-Windows
-    ```shell
-    psql -U postgres -c "create role employment with encrypted password 'secure-password';"
-    psql -U postgres -c "create database employment_services"
-    ```
+```shell
+sudo -u postgres psql -c "create role employment with encrypted password 'secure-password';"
+sudo -u postgres psql -c "create database employment_services"
+```
+
+- Windows
+```shell
+psql -U postgres -c "create role employment with encrypted password 'secure-password';"
+psql -U postgres -c "create database employment_services"
+```
 
 ### Build Employment Search static resources
 
