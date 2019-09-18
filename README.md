@@ -4,16 +4,18 @@ Installation
 ------------
 
 ### Prepare and activate virtualenv
-Windows
-    ```shell
-    python -m venv env
-    call env/scripts/activate
-    ```
-Linux
-    ```shell
-    python3 -m venv env
-    source venv/bin/activate
-    ```
+
+- Windows
+```shell
+python -m venv env
+call env/scripts/activate
+```
+
+- Linux
+```shell
+python3 -m venv env
+source venv/bin/activate
+```
 
 
 ### Install required packages
