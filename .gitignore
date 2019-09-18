@@ -21,3 +21,4 @@ scripts/
 pyvenv*
 .pytest_*
 .vscode/
+.DS_Store
