@@ -42,10 +42,18 @@ psql -U postgres -c "create database employment_services"
 
 ### Build Employment Search static resources
 
-Make sure you have Node 8 or LTS and yarn installed.
+Make sure you have nodejs installed.
+
+- Linux
 
 ```shell
-./build-resources
+chmod +x ./build-resources.sh
+./build-resources.sh
+```
+
+- Windows
+```shell
+start build-resources.bat
 ```
 
 ### Dev environment configuration
