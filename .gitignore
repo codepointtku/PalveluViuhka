@@ -15,8 +15,9 @@ perf*csv
 /dist
 /src
 .env
-/.vscode
 env/
 Lib/
 scripts/
 pyvenv*
+.pytest_*
+.vscode/
