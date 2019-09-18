@@ -9,11 +9,32 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
+from os import getcwd, chmod
+from os.path import join, abspath, dirname, exists
+import environ
+import sys
 
-import os
+root = environ.Path(__file__) - 2
+PROJECT_ROOT = abspath(dirname(__file__))
+env = environ.Env(
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, ''),
+    ALLOWED_HOSTS=(list, []),
+    STATIC_ROOT=(environ.Path(), root('static')),
+    STATIC_URL=(str, '/static/'),
+    FORCE_SCRIPT_NAME=(str, ''),
+    DATABASE_ENGINE=(str,'django.db.backends.postgresql_psycopg2'),
+    DATABASE_NAME=(str,''),
+    DATABASE_USER=(str, ''),
+    DATABASE_PASSWORD=(str, ''),
+    DATABASE_HOST=(str, 'localhost'),
+    DATABASE_PORT=(str, '5805')
+)
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-FORCE_SCRIPT_NAME = ''
+env.read_env()
+
+# Build paths inside the project like this: join(BASE_DIR, ...)
+FORCE_SCRIPT_NAME = env('FORCE_SCRIPT_NAME')
 
 
 
@@ -36,20 +57,20 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'jz8x6v28zf$syxa3$8l!n!*p_c-6jk1@_ay*p(7so5e5gm&#(&'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['*']
+DEBUG = env('DEBUG')
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+SECRET_KEY = env('SECRET_KEY')
 
 # Application definition
+BASE_DIR = root()
+STATIC_URL = env('STATIC_URL')
+STATIC_ROOT = env('STATIC_ROOT')
 
-BASE_DIR = os.path.abspath(__file__)
-STATIC_ROOT = os.path.abspath(__file__)
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.abspath('./static'), )
+STATICFILES_DIRS = (
+    join(PROJECT_ROOT, 'static'),
+)
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -80,7 +101,7 @@ ROOT_URLCONF = 'employment.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ os.path.join(BASE_DIR, 'templates'), ],
+        'DIRS': [ join(BASE_DIR, 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,12 +119,12 @@ WSGI_APPLICATION = 'employment.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'employment_services',
-        'USER': 'employment',
-        'PASSWORD': '123abc',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': env('DATABASE_ENGINE'),
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
     }
 }
 
@@ -133,7 +154,26 @@ REST_FRAMEWORK = {
     'VIEW_NAME_FUNCTION': 'services.views.get_view_name',
 }
 
-
+# If a secret key was not supplied from elsewhere, generate a random one
+# and store it into a file called .django_secret.
+if not SECRET_KEY or SECRET_KEY is None:
+    secret_file = join(BASE_DIR, '.django_secret')
+    try:
+        with open(secret_file, 'r') as f:
+            SECRET_KEY = f.read().strip()
+            if not SECRET_KEY:
+                raise IOError
+    except IOError:
+        import random
+        system_random = random.SystemRandom()
+        try:
+            SECRET_KEY = ''.join([system_random.choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(64)])
+            secret = open(secret_file, 'w')
+            chmod(secret_file, 0o0600)
+            secret.write(SECRET_KEY)
+            secret.close()
+        except IOError:
+            Exception('Please create a %s file with random characters to generate your secret key!' % secret_file)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -150,8 +190,8 @@ USE_TZ = True
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
-f = os.path.join(BASE_DIR, "local_settings.py")
-if os.path.exists(f):
+f = join(BASE_DIR, "local_settings.py")
+if exists(f):
     import sys
     import imp
     module_name = "%s.local_settings" % ROOT_URLCONF.split('.')[0]
@@ -159,3 +199,4 @@ if os.path.exists(f):
     module.__file__ = f
     sys.modules[module_name] = module
     exec(open(f, "rb").read())
+

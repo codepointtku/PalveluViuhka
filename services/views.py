@@ -200,8 +200,9 @@ def get_view_name(cls, suffix=None):
         return 'Employment Services'
     return original_get_view_name(cls, suffix)
 
-def page_not_found(request):
+def page_not_found(request, exception):
     response = render(request, "404.html")
     response.status_code = 404
+    print(exception)
 
     return response

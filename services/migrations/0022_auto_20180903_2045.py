@@ -13,10 +13,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-#        migrations.RemoveField(
-#            model_name='service',
-#            name='labour_hire',
-#        ),
+        migrations.RemoveField(
+            model_name='service',
+            name='labour_hire',
+        ),
         migrations.AlterField(
             model_name='service',
             name='organization',
