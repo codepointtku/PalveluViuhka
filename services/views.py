@@ -124,6 +124,9 @@ def feedback_form(request):
 def info(request):
     return render(request, "info.html", {'contact_email': getattr(settings, "CONTACT_EMAIL", "")})
 
+#added saavutettavuus html
+def saavutettavuus(request):
+    return render(request, "saavutettavuus.html", {'contact_email': getattr(settings, "CONTACT_EMAIL", "")})
 
 @login_required
 def provider_info(request):
