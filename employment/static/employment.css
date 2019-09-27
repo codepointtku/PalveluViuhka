@@ -94,8 +94,10 @@ h1 {
 }
 
 h2 {
-    font-size: 250%;
+    font-size: 80%;
     color: #00A97A;
+    margin: auto;
+    text-align: center;
 }
 
 .column-title {

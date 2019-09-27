@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^list/', views.ServiceList.as_view(), name="service_list"),
     url(r'^details/(?P<pk>\d+)$', views.ServiceDetail.as_view(), name="service_detail"),
     url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^saavutettavuus/', views.saavutettavuus, name='saavutettavuus'), #added saavutettavuus html
 ]
 
 #if not getattr(settings, "FORCE_SCRIPT_NAME", ""):
